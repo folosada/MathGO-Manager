@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EditTeamPage } from '../edit-team/edit-team';
 
 /**
  * Generated class for the ListaEquipesPage page.
@@ -19,6 +20,7 @@ export class ListaEquipesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.teams = new Array<Team>();
+    this.firebase.getToken().subscribe()
   }
 
   ionViewDidLoad() {
@@ -27,6 +29,6 @@ export class ListaEquipesPage {
 
 
   editTeam(team: Team) {
-
+    this.navCtrl.push(EditTeamPage, {team: team, readOnly: false})
   }
 }

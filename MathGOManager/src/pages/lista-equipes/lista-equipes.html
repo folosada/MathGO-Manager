@@ -1,20 +1,12 @@
-<!--
-  Generated template for the ListaEquipesPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Equipes</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
   <ion-list no-lines>
-    <button ion-item *ngFor="let team of teams" (click)="editTeam(team)">{{team.getName()}}</button>
+    <button ion-item *ngFor="let team of teams" (click)="editTeam(team)">{{team.getEditableName() || team.getName()}}</button>
   </ion-list>
 </ion-content>

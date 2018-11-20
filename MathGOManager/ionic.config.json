@@ -1,5 +1,7 @@
 {
   "name": "MathGOManager",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
