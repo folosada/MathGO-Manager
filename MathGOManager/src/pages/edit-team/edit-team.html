@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="true">
     <ion-title>Editar equipe - {{ team.editableName || team.name }}</ion-title>
   </ion-navbar>
 
@@ -21,17 +21,19 @@
   </ion-list>
   <ion-list>
     <ion-item>
-      <ion-input placeholder="Nome do aluno" type="text" value={{memberName}}></ion-input>
+      <ion-input placeholder="Nome do aluno" type="text" [(ngModel)]="memberName"></ion-input>
     </ion-item>
-    <ion-item>
-      <button enabled={{!readOnly}} (click)="addMember()">Adicionar</button>
-    </ion-item>
+    <ion-buttons>
+      <button ion-button large [disabled]="readOnly" (click)="addMember()">Adicionar</button>
+    </ion-buttons>
   </ion-list>
-  <ion-list no-lines>
-    <ion-item *ngFor="let member of team.members"> {{member}}
-        <button enabled={{!readOnly}} ion-button icon-only>
-          <ion-icon name="delete"></ion-icon>
-        </button>
+  <ion-list>
+    <ion-item *ngFor="let member of team.members">
+      <div style="width: 100%">
+        <label>{{member}}</label>
+        <br>
+        <button style="width: 20%" ion-button color="danger" item-end (click)="deleteMember(member)">Excluir</button>  
+      </div>
     </ion-item>        
   </ion-list>
 </ion-content>

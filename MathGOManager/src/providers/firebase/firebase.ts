@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs-compat';
+import { Team } from '../../app/model/Team';
 
 @Injectable()
 export class FirebaseProvider {
@@ -10,38 +12,27 @@ export class FirebaseProvider {
   constructor(private db: AngularFireDatabase) {
   }
 
-  getAll() {
-    return this.db.list(this.PATH, ref => ref.orderByChild('name'))
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.key, ...c.payload.val() }));
-      })
+  getAll(): Observable<any> {
+    return this.db.list(this.PATH, ref => ref.orderByChild('name')).snapshotChanges();
   }
 
+  /*
   get(key: string) {
     return this.db.object(this.PATH + key).snapshotChanges()
       .map(c => {
         return { key: c.key, ...c.payload.val() };
       });
   }
-
-  save(item: any) {
-    return new Promise((resolve, reject) => {
-      if (item.key) {
-        this.db.list(this.PATH)
-          .update(item.key, { name: item.name, tel: item.tel })
-          .then(() => resolve())
-          .catch((e) => reject(e));
-      } else {
-        this.db.list(this.PATH)
-          .push({ name: item.name, tel: item.tel })
-          .then(() => resolve());
-      }
-    })
+*/
+  saveName(team: Team) {
+    return this.db.list(this.PATH).update(team.getKey(), { editableName: team.getEditableName() });
   }
 
-  remove(key: string) {
-    return this.db.list(this.PATH).remove(key);
+  insertMember(key: string, member: string) {
+    return this.db.list(this.PATH + key + '/members/').push({name: member});
   }
 
+  remove(path: string, key: string) {
+    return this.db.list(path).remove(key);
+  }
 }

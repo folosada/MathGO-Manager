@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, NavOptions } from 'ionic-angular';
 import { EditTeamPage } from '../edit-team/edit-team';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 import { Observable } from 'rxjs-compat';
-
-/**
- * Generated class for the ListaEquipesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Team } from '../../app/model/Team';
 
 @IonicPage()
 @Component({
@@ -22,23 +16,26 @@ export class ListaEquipesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private firebaseProvider: FirebaseProvider) {
     this.teams = new Array<Team>();
-    this.loadTeams(this.firebaseProvider.getAll());
+    this.loadTeams(this.firebaseProvider.getAll());    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListaEquipesPage');
+    this.navCtrl.name = 'Equipes';
   }
 
 
-  editTeam(team: Team) {
+  editTeam(team: Team) {    
     this.navCtrl.push(EditTeamPage, {team: team, readOnly: false})
   }
 
   loadTeams(list: Observable<any>) {
-    list.subscribe(items => {
-      items.array.forEach(element => {
+    list.subscribe(items => {            
+      items.forEach(element => {        
+        const payload = element.payload.val();
+        payload.key = element.key;
         const team: Team = new Team();        
-        team._init(element);
+        team._init(payload);
         this.teams.push(team)
       });
     })

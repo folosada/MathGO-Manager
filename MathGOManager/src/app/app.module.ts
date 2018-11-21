@@ -10,6 +10,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListaEquipesPage } from '../pages/lista-equipes/lista-equipes';
+import { EditTeamPage } from '../pages/edit-team/edit-team';
 import { RankingPage } from '../pages/ranking/ranking';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 import { config } from '../providers/firebase/config';
@@ -19,7 +20,8 @@ import { config } from '../providers/firebase/config';
     MyApp,
     HomePage,
     ListaEquipesPage,
-    RankingPage
+    RankingPage,
+    EditTeamPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { config } from '../providers/firebase/config';
     MyApp,
     HomePage,
     ListaEquipesPage,
-    RankingPage
+    RankingPage,
+    EditTeamPage
   ],
   providers: [
     StatusBar,
