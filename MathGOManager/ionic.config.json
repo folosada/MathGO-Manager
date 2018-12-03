@@ -1,5 +1,5 @@
 {
-  "name": "MathGOManager",
+  "name": "br.furb.mathgo_manager",
   "integrations": {
     "cordova": {}
   },
