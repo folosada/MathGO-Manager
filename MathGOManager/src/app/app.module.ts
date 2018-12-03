@@ -14,6 +14,7 @@ import { EditTeamPage } from '../pages/edit-team/edit-team';
 import { RankingPage } from '../pages/ranking/ranking';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 import { config } from '../providers/firebase/config';
+import { ResetPage } from '../pages/reset/reset';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { config } from '../providers/firebase/config';
     HomePage,
     ListaEquipesPage,
     RankingPage,
-    EditTeamPage
+    EditTeamPage,
+    ResetPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { config } from '../providers/firebase/config';
     HomePage,
     ListaEquipesPage,
     RankingPage,
-    EditTeamPage
+    EditTeamPage,
+    ResetPage
   ],
   providers: [
     StatusBar,

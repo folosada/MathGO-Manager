@@ -7,12 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ranking</ion-title>
+    <ion-title>Ranking</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-list no-lines>
+    <button ion-item *ngFor="let team of teams">
+      {{ team.editableName || team.name }}
+    </button> 
+  </ion-list>
 </ion-content>

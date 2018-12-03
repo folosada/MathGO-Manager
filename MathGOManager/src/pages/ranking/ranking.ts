@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { Team } from '../../app/model/Team';
 
 /**
  * Generated class for the RankingPage page.
@@ -15,11 +17,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RankingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private teams: Array<Team>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fireabaseProvider: FirebaseProvider) {    
+    this.fireabaseProvider.getAll().subscribe(items => {
+      this.teams = new Array<Team>();
+      items.forEach(element => {
+        const payload: any = element.payload.val();
+        payload.key = element.key;
+        if (payload.Ativa) {
+          const team: Team = new Team();
+          team._init(payload);
+          this.teams.push(team);
+        }
+      });
+      this.teams.sort((teamA, teamB) => {
+        let qtdA: number;
+        let qtdB: number;
+        teamA.getMarkers().forEach(marker => {
+          marker.isRespondido() && marker.isCorreto() && ++qtdA;
+        });
+        teamB.getMarkers().forEach(marker => {
+          marker.isRespondido() && marker.isCorreto() && ++qtdB;
+        });
+        return qtdB - qtdA;
+      })
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RankingPage');
   }
+
+
 
 }

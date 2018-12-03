@@ -1,18 +1,27 @@
+import { Member } from './Member';
+import { Marker } from './Marker';
+
 export class Team {
     private key: string;
     private name: string;
-    private members: Array<string>;
+    private members: Array<Member>;
     private editableName: string;
+    private markers: Array<Marker>;
 
     constructor() {
-        this.members = new Array<string>();
+        this.members = new Array<Member>();
     }
 
     public _init(object: any) {
         this.setKey(object.key);
-        this.setName(object.name);
+        this.setName(object.name || object.Nome);
         this.setEditableName(object.editableName);
-        this.members = !object.members ? new Array<string>() : object.members;
+        if (object.members && object.members[0]) {
+            this._initMembers(object.members);
+        }
+        if (object.Marcadores && object.Marcadores[0]) {
+          this._initMarkers(object.Marcadores);
+      }
     }
 
     public setKey(key: string) {
@@ -39,16 +48,42 @@ export class Team {
         return this.editableName;
     }
 
-    public addMember(member: string) {
+    public addMember(name: string) {
+        const member: Member = new Member();
+        member.setName(name);
         this.members.push(member);
     }
 
-    public getMembers(): string[] {
+    public getMembers(): Member[] {
         return this.members;
     }
     
-    public removeMember(member: string) {
-        const index: number = this.members.indexOf(member);
+    public removeMember(name: string) {        
+        const index: number = this.members.findIndex((member: Member) => {
+            return member.getName() === name;
+        });
         this.members.splice(index, 1);
     }
+
+    public getMarkers(): Marker[] {
+      return this.markers;
+    }
+
+    private _initMembers(members: Array<any>) {
+        this.members = new Array<Member>();
+        members.forEach(element => {
+            const member = new Member();
+            member.setName(element.name);
+            this.members.push(member);
+        })
+    }
+
+    private _initMarkers(markers: Array<any>) {
+      this.markers = new Array<Marker>();
+      markers.forEach(element => {
+          const marker: Marker = new Marker();
+          marker._init(element);
+          this.markers.push(marker);
+      })
+  }
 }

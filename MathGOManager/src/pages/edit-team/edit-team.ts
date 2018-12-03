@@ -2,13 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Team } from '../../app/model/Team';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
-
-/**
- * Generated class for the EditTeamPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Member } from '../../app/model/Member';
 
 @IonicPage()
 @Component({
@@ -20,11 +14,17 @@ export class EditTeamPage {
   private team: Team;
   private readOnly: boolean;
   private memberName: string;
+  private teamName: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private firebaseProvider: FirebaseProvider) {
-    this.team = new Team();
+    this.team = new Team();    
     this.team._init(navParams.get('team'));
-    this.readOnly = navParams.get('readOnly');    
+    this.readOnly = navParams.get('readOnly');
+    this.teamName = this.team.getEditableName() || this.team.getName();
+  }
+
+  saveName(event) {    
+    this.firebaseProvider.saveName(this.team.getKey(), event.value);
   }
 
   ionViewDidLoad() {
@@ -35,13 +35,14 @@ export class EditTeamPage {
   addMember() {
     if (this.memberName) {
       this.team.addMember(this.memberName);
+      this.firebaseProvider.insertMember(this.team.getKey(), this.team.getMembers());
       this.memberName = '';
     }
   }
 
-  deleteMember(member: string) {
-    this.team.removeMember(member);
-    this.firebaseProvider.remove(this.team.getKey(), member);
+  deleteMember(member: Member) {
+    this.team.removeMember(member.getName());
+    this.firebaseProvider.removeMember(this.team.getKey(), member.getName());
   }
 
 }
