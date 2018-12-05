@@ -6,8 +6,11 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>    
     <ion-title>Reiniciar Jogo</ion-title>
+    <button style="width: 40px; height: 30px;" class="backButton" clear ion-button color="black" icon-only (click)="back()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
@@ -18,5 +21,5 @@
     Ao reiniciar o jogo, todas as pontuações serão resetadas e todas as informações sobre as equipes serão perdidas (membros, nomes, pontos).
     Tem certeza que deseja reiniciar?
   </p>
-  <button ion-button large (click)="reset()">Reiniciar Jogo</button>
+  <button style="width: 100%"ion-button large (click)="reset()">Reiniciar Jogo</button>
 </ion-content>

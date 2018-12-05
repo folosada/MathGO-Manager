@@ -6,8 +6,12 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <ion-title>Ranking</ion-title>
+    <button style="width: 40px; height: 30px;" class="backButton" clear ion-button color="black" icon-only (click)="back()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    
   </ion-navbar>
 
 </ion-header>
@@ -15,8 +19,17 @@
 
 <ion-content padding>
   <ion-list no-lines>
-    <button ion-item *ngFor="let team of teams">
-      {{ team.editableName || team.name }}
-    </button> 
+    <ion-item>
+      <div>
+        <label><strong>Equipe</strong></label>
+        <label style="width: 60px; float: right" item-end><strong>Pontos</strong></label>
+      </div>      
+    </ion-item>
+    <ion-item *ngFor="let team of teams">
+      <div>
+        <label>{{ team.editableName || team.name }}</label>        
+        <label style="width: 60px; float: right; text-align: right" item-end>{{team.score}}</label>
+      </div>      
+    </ion-item> 
   </ion-list>
 </ion-content>

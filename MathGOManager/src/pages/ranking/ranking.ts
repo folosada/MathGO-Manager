@@ -31,15 +31,17 @@ export class RankingPage {
           this.teams.push(team);
         }
       });
-      this.teams.sort((teamA, teamB) => {
-        let qtdA: number;
-        let qtdB: number;
+      this.teams.sort((teamA: Team, teamB: Team) => {
+        let qtdA: number = 0;
+        let qtdB: number = 0;
         teamA.getMarkers().forEach(marker => {
           marker.isRespondido() && marker.isCorreto() && ++qtdA;
         });
         teamB.getMarkers().forEach(marker => {
           marker.isRespondido() && marker.isCorreto() && ++qtdB;
         });
+        teamA.setScore(qtdA);
+        teamB.setScore(qtdB);
         return qtdB - qtdA;
       })
     });
@@ -49,6 +51,8 @@ export class RankingPage {
     console.log('ionViewDidLoad RankingPage');
   }
 
-
+  back() {
+    this.navCtrl.pop();
+  }
 
 }

@@ -27,4 +27,7 @@ export class ResetPage {
     this.firebaseProvider.reset();
   }
 
+  back() {
+    this.navCtrl.pop();
+  }
 }

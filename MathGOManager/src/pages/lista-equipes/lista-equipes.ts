@@ -43,4 +43,8 @@ export class ListaEquipesPage {
       });
     })
   }
+
+  back() {
+    this.navCtrl.pop();
+  }
 }

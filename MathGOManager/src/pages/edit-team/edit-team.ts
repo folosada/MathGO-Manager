@@ -45,4 +45,8 @@ export class EditTeamPage {
     this.firebaseProvider.removeMember(this.team.getKey(), member.getName());
   }
 
+  back() {
+    this.navCtrl.pop();
+  }
+
 }
